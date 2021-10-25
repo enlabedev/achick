@@ -13,3 +13,10 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: footer.php:2
+msgid "Powered by <a rel=\"noreferrer\" href=\"%1$s\" class=\"%2$s\" target=\"_blank\">%3$s</a>"
+msgstr ""
+
+#: index.php:12, index.php:14
+msgid "Achick - Clean minimalistic theme"
+msgstr ""
