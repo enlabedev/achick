@@ -209,3 +209,8 @@ gulp.task(
 		gulp.watch(config.path.images.source, gulp.series('images', reload));
 	})
 );
+
+gulp.task(
+	'production',
+	gulp.series('translate', 'styles','javaScript','favicon','fonts','images')
+);
