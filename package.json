@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "gulp",
-    "prod": "gulp --prod",
+    "prod": "gulp production --prod --translate",
     "styles": "gulp styles",
     "images": "gulp images",
     "js": "gulp javaScript",
