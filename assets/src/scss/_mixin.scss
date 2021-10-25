@@ -1,0 +1,214 @@
+
+
+/* Retina Images
+-------------------------*/
+
+@mixin image-2x($image, $width, $height) {
+    @media (min--moz-device-pixel-ratio: 1.3),
+    (-o-min-device-pixel-ratio: 2.6/2),
+    (-webkit-min-device-pixel-ratio: 1.3),
+    (min-device-pixel-ratio: 1.3),
+    (min-resolution: 1.3dppx) {
+      /* on retina, use image that's scaled by 2 */
+      background-image: url($image);
+      background-size: $width $height;
+    }
+  }
+  
+  /* Clearfix
+  -------------------------*/
+  
+  @mixin clearfix() {
+    &:before,
+    &:after {
+      content: "";
+      display: table;
+    }
+    &:after {
+      clear: both;
+    }
+  }
+  
+  /* Box Sizing
+  -------------------------*/
+  
+  @mixin box-sizing($box-model) {
+    -webkit-box-sizing: $box-model; // Safari <= 5
+    -moz-box-sizing: $box-model; // Firefox <= 19
+    box-sizing: $box-model;
+  }
+  
+  /* Border Radius
+  -------------------------*/
+  
+  @mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+    border-radius: $radius;
+    background-clip: padding-box;  /* stops bg color from leaking outside the border: */
+  }
+  
+  // Single side border-radius
+  
+  @mixin border-top-radius($radius) {
+    -webkit-border-top-right-radius: $radius;
+    border-top-right-radius: $radius;
+    -webkit-border-top-left-radius: $radius;
+    border-top-left-radius: $radius;
+    background-clip: padding-box;
+  }
+  @mixin border-right-radius($radius) {
+    -webkit-border-bottom-right-radius: $radius;
+    border-bottom-right-radius: $radius;
+    -webkit-border-top-right-radius: $radius;
+    border-top-right-radius: $radius;
+    background-clip: padding-box;
+  }
+  @mixin border-bottom-radius($radius) {
+    -webkit-border-bottom-right-radius: $radius;
+    border-bottom-right-radius: $radius;
+    -webkit-border-bottom-left-radius: $radius;
+    border-bottom-left-radius: $radius;
+    background-clip: padding-box;
+  }
+  @mixin border-left-radius($radius) {
+    -webkit-border-bottom-left-radius: $radius;
+    border-bottom-left-radius: $radius;
+    -webkit-border-top-left-radius: $radius;
+    border-top-left-radius: $radius;
+    background-clip: padding-box;
+  }
+  
+  /* Opacity
+  -------------------------*/
+  
+  @mixin opacity($opacity) {
+    opacity: $opacity;
+    $opacity-ie: $opacity * 100;
+    filter: alpha(opacity=$opacity-ie); //IE8
+  }
+  
+  /* Text overflow
+  -------------------------*/
+  
+  @mixin text-shorten($numLines: 1) {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  
+    @supports (-webkit-line-clamp: $numLines) {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: initial;
+      display: -webkit-box;
+      -webkit-line-clamp: $numLines;
+      -webkit-box-orient: vertical;
+    }
+  }
+  
+  /* Font Size
+  -------------------------*/
+  
+  @mixin font-size($size: 12, $base: 16) {
+    font-size: $size + px;
+    font-size: ($size / $base) * 1rem;
+  }
+  
+  /* Line Height
+  -------------------------*/
+  
+  @mixin line-height($height: 12, $base: 16){
+    line-height: $height + px;
+    line-height: ($height / $base) * 1rem;
+  }
+  
+  /* Place Holder
+  -------------------------*/
+  @mixin placeholder {
+    &.placeholder { @content; }
+    &:-moz-placeholder { @content; }
+    &::-moz-placeholder { @content; }
+    &:-ms-input-placeholder { @content; }
+    &::-webkit-input-placeholder { @content; }
+  }
+  
+  /* String Replace
+  -------------------------*/
+  
+  @function str-replace($string, $search, $replace: "") {
+    $index: str-index($string, $search);
+  
+    @if $index {
+      @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+    }
+  
+    @return $string;
+  }
+  
+  /* Font Face
+  -------------------------*/
+  @mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff2 woff ttf svg) {
+    $src: null;
+  
+    $extmods: (
+            eot: "?",
+            svg: "#" + str-replace($name, " ", "_")
+    );
+  
+    $formats: (
+            otf: "opentype",
+            woff: "font-woff",
+            ttf: "truetype"
+    );
+  
+    @each $ext in $exts {
+      $extmod: if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext);
+      $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+      $src: append($src, url(quote($path + "." + $extmod)) format(quote($format)), comma);
+    }
+  
+    @font-face {
+      font-family: quote($name);
+      font-style: $style;
+      font-weight: $weight;
+      font-display: swap;
+      src: $src;
+    }
+  }
+  
+  
+  /* Breeakpoints
+  -------------------------*/
+  
+  @mixin sm {
+    @media (min-width: #{$screen-sm-min}) {
+        @content;
+    }
+  }
+  
+  // Medium devices
+  @mixin md {
+    @media (min-width: #{$screen-md-min}) {
+        @content;
+    }
+  }
+  
+  // Large devices
+  @mixin lg {
+    @media (min-width: #{$screen-lg-min}) {
+        @content;
+    }
+  }
+  
+  // Extra large devices
+  @mixin xl {
+    @media (min-width: #{$screen-xl-min}) {
+        @content;
+    }
+  }
+  
+  // Custom devices
+  @mixin rwd($screen) {
+    @media (min-width: $screen+'px') {
+        @content;
+    }
+  }

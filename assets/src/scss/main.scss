@@ -1,0 +1,49 @@
+@import "reset";
+@import "variables";
+@import "mixin";
+
+@include font-face("SourceCodePro", "../fonts/SourceCodePro-Bold", 700);
+@include font-face("SourceCodePro", "../fonts/SourceCodePro-Light", 300);
+@include font-face("SourceCodePro", "../fonts/SourceCodePro-Regular", 400);
+
+$footer:50px;
+
+body{
+    font-family: "SourceCodePro", sans-serif;
+    background: $primary
+}
+
+.content-center{
+    width: 100%;
+    height: calc(100vh - #{$footer});
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text{
+    &-transparent{
+        position: absolute;
+        clip: rect(0px, 0px, 0px, 0px);
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        
+    }
+}
+
+.footer{
+    color: $secondary;
+    line-height: #{$footer};
+    height: #{$footer};
+    text-align: center;
+}
+
+.style{
+    padding: 2px 4px;
+    background: $secondary;
+    color:$primary;
+    text-decoration: none;
+    font-weight: 700;
+}
